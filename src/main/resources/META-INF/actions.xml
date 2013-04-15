@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:soapui-actions xmlns:tns="http://eviware.com/soapui/config">
+  <tns:actionGroup name="EMail TestStep Actions"
+		id="EMailTestStepActions"
+		class="com.eviware.soapui.impl.wsdl.actions.teststep.WsdlTestStepSoapUIActionGroup">
+		<tns:actionMapping actionId="SeperatorAction" />
+		<tns:actionMapping actionId="ShowOnlineSoapUIHelp"
+			keyStroke="F1" param="http://blog.smartbear.com/software-quality/bid/170458/Creating-your-own-TestSteps-in-soapUI" />
+	</tns:actionGroup>
+</tns:soapui-actions>
