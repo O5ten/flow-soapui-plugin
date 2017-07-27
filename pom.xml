@@ -5,16 +5,18 @@
     <modelVersion>4.0.0</modelVersion>
 
 
-    <groupId>com.smartbear</groupId>
-    <artifactId>soapui-emailteststep-plugin</artifactId>
-    <version>1.0-plugin</version>
+    <groupId>se.osten</groupId>
+    <artifactId>flow-soapui-plugin</artifactId>
+    <version>1.0</version>
 
     <repositories>
         <repository>
             <id>soapUI Repository</id>
-            <url>http://www.soapui.org/repository/maven2</url>
+            <url>http://www.smartbearsoftware.com/repository/maven2</url>
         </repository>
     </repositories>
+
+    <packaging>jar</packaging>
 
     <dependencies>
 
@@ -31,9 +33,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>eviware</groupId>
+            <groupId>com.smartbear.soapui</groupId>
             <artifactId>soapui</artifactId>
-            <version>4.5.1</version>
+            <version>5.3.0</version>
         </dependency>
         <dependency>
             <groupId>eviware</groupId>
@@ -166,9 +168,10 @@
             <version>1.1</version>
         </dependency>
         <dependency>
-            <groupId>javax.mail</groupId>
-            <artifactId>mail</artifactId>
-            <version>1.4</version>
+            <groupId>com.miglayout</groupId>
+            <artifactId>miglayout</artifactId>
+            <version>3.7.4</version>
+            <type>jar</type>
         </dependency>
     </dependencies>
 
@@ -202,7 +205,7 @@
         </plugins>
 
     </build>
-    <name>soapUI EMail TestStep plugin</name>
+    <name>SoapUI Flow Plugin</name>
 
     
 </project>
