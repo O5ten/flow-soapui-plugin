@@ -69,15 +69,25 @@ public class RepeatTestStep extends WsdlTestStepWithProperties {
 
     public TestStepResult run(TestCaseRunner testCaseRunner, TestCaseRunContext testCaseRunContext) {
         WsdlTestStepResult result = new WsdlTestStepResult(this);
-        if (currentAttempts >= maxAttempts) {
-            result.setStatus(TestStepResult.TestStepStatus.FAILED);
-        } else if (isPredecessorsSuccessful(testCaseRunner)) {
+        if (isPredecessorsSuccessful(testCaseRunner)) {
             result.setStatus(TestStepResult.TestStepStatus.OK);
+            boolean allTestsPassed = true;
+            for (TestStepResult testStepResult : testCaseRunner.getResults()) {
+                if (testStepResult.getStatus() != TestStepResult.TestStepStatus.OK) {
+                    allTestsPassed = false;
+                    break;
+                }
+            }
+            if (allTestsPassed) {
+                testCaseRunContext.setProperty(TestCaseRunner.Status.class.getName(), TestCaseRunner.Status.RUNNING);
+            }
             currentAttempts = 0;
-        } else {
+        } else if (currentAttempts < maxAttempts) {
             testCaseRunner.gotoStepByName(getTargetTestStep());
             currentAttempts = currentAttempts + 1;
             result.setStatus(TestStepResult.TestStepStatus.OK);
+        } else {
+            result.setStatus(TestStepResult.TestStepStatus.FAILED);
         }
         return result;
     }
