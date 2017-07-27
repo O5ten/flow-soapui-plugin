@@ -1,8 +1,13 @@
-EMailTestStep plugin for SoapUI
+Flow SoapUI Plugin
 -------------------------------
+*Only tested on SoapUI OS 5.3.0*
 
-Initially described at http://blog.smartbear.com/software-quality/bid/170458/Creating-your-own-TestSteps-in-soapUI
+Tiny plugin to give the user the possibility to have unstable test-steps primarily by allowing them to fail and pass through a repetition procedure. But i intend to add new test-steps for having just control-flow in testCases. 
 
-2013-04-14 - Mavenized and adapted for soapUI plugin support
+##USAGE
 
-/Ole Lensmar, @olensmar
+```bash
+  mvn clean install 
+```
+
+copy the ``` target/flow-soapui-plugin-1.0.0.jar ``` and put it in ``` ${USER_HOME}/.soapuios/plugins```
