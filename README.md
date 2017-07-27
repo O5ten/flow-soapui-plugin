@@ -1,7 +1,7 @@
 Flow SoapUI Plugin
 -------------------------------
 
-*Only tested on SoapUI OS 5.3.0*
+*Tested to work  on SoapUI OS 5.2.0*
 
 Some services are dependent on inherently unstable services. This plugin is developed to resolve that particular problem and functionally test even unstable endpoints. 
 It is a plugin that gives the power to the user and the possibility to have unstable test-steps. Primarily it allows them to fail and pass through a repetition procedure. 
@@ -18,7 +18,10 @@ copy the ``` target/flow-soapui-plugin-1.0.0.jar ``` and put it in ``` ${USER_HO
 Unsigned Plugin
 -------------------------------
 
-This plugin is an unsigned SoapUI plugin for now and until it is signed then you will have to build
+In SoapUI OS 5.2.1 a signing procedure was introduced to hash out what product the plugin is included with.
+This plugin is not signed and can thereby only be used with SoapUI OS 5.2.0 and earlier. 
+
+If you want to test it on 5.2.1+ you will have to build
 hschotts Jailbreak Plugin and put it in ``` ${SOAPUI_HOME}/jre/lib/ext ```
 
 ```

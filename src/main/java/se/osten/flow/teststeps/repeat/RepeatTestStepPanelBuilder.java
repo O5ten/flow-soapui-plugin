@@ -9,19 +9,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @PluginPanelBuilder(targetModelItem = RepeatTestStep.class)
-public class RepeatTestStepPanelBuilder extends EmptyPanelBuilder<RepeatTestStep>
-{
-	Logger logger = LoggerFactory.getLogger(RepeatTestStepPanelBuilder.class);
+public class RepeatTestStepPanelBuilder extends EmptyPanelBuilder<RepeatTestStep> {
+    Logger logger = LoggerFactory.getLogger(RepeatTestStepPanelBuilder.class);
 
-	@Override
-	public DesktopPanel buildDesktopPanel( RepeatTestStep modelItem )
-	{
-		return new RepeatTestStepDesktopPanel( modelItem );
-	}
+    @Override
+    public DesktopPanel buildDesktopPanel(RepeatTestStep modelItem) {
+        return new RepeatTestStepDesktopPanel(modelItem);
+    }
 
-	@Override
-	public boolean hasDesktopPanel()
-	{
-		return true;
-	}
+    @Override
+    public boolean hasDesktopPanel() {
+        return true;
+    }
 }
