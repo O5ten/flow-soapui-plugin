@@ -42,7 +42,9 @@ public class RepeatTestStepDesktopPanel extends ModelItemDesktopPanel<RepeatTest
 
 	private void addTargetTestStep() {
 		Set<String> testStepNamesWithinRange = getTestStepNamesWithinRange();
+
 		this.targetTestStep = form.appendComboBox("Go to", testStepNamesWithinRange.toArray(), "TestStep to go to");
+		this.targetTestStep.setEnabled(testStepNamesWithinRange.size() != 0);
 		this.targetTestStep.setSelectedItem(getModelItem().getTargetTestStep());
 		this.targetTestStep.addActionListener(this);
 	}
