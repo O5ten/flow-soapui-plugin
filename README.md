@@ -3,7 +3,7 @@ Flow SoapUI Plugin
 
 *Tested to work  on SoapUI OS 5.2.0*
 
-![Travis Build](https://travis-ci.org/O5ten/flow-soapui-plugin.svg?branch=master)
+[![Build Status](https://travis-ci.org/O5ten/flow-soapui-plugin.svg?branch=master)](https://travis-ci.org/O5ten/flow-soapui-plugin)
 
 Some services are dependent on inherently unstable services. This plugin is developed to resolve that particular problem and functionally test even unstable endpoints. 
 It is a plugin that gives the power to the user and the possibility to have unstable test-steps. Primarily it allows them to fail and pass through a repetition procedure. 
