@@ -29,16 +29,14 @@ Unsigned Plugin
 In SoapUI OS 5.2.1 a signing procedure was introduced to hash out what product the plugin is included with.
 This plugin is not signed and can thereby only be used with SoapUI OS 5.2.0 and earlier. 
 
-If you want to test it on 5.2.1+ you will have to build
-hschotts Jailbreak Plugin and put it in ``` ${SOAPUI_HOME}/jre/lib/ext ```
-
-```
- https://github.com/hschott/soapui-pluginloader-jailbreak
-```
+If you want it test it on 5.2.1+ you will have to build
+hschotts [Jailbreak Plugin][4] and put it in ``` ${SOAPUI_HOME}/jre/lib/ext ```. 
+The idea is to have the plugin signed by SmartBear, but until then this will have to do as a workaround.
 
 Usage
 -------------------------------
 
+**Repeat Test Step**
 - Add the repeat teststep to your testcase
 - select a target teststep which from where the testcase will be iterated from
 - select a maximum number of attempts
@@ -53,7 +51,7 @@ Since it's difficult to use anything without having an example to consult there 
 
 ![Picture of the teststep][1]
 
-You can find it[here][2]. To make sure it works [Travis CI][3] runs the entire sample-project as a regression-test against the teststep. 
+You can find it [here][2]. To make sure it works [Travis CI][3] runs the entire sample-project as a regression-test against the teststep. 
  
 Future Work/Feature Requests
 -------------------------------
@@ -61,7 +59,9 @@ Future Work/Feature Requests
 - Make it possible to use conditionals or xpath, json-query to decide whether to continue iterating or not. Like Conditional Goto. 
 - Mock-Service-control test-steps, today you have to script to do that. 
 - SSH Test-Steps 
+- Please put your suggestion as an issue 
 
 [1]: https://github.com/O5ten/flow-soapui-plugin/blob/master/repeat-test-step.jpg
 [2]: https://github.com/O5ten/flow-soapui-plugin/blob/master/Unstable-Endpoint-SoapUI-project.xml
 [3]: https://travis-ci.org/O5ten/flow-soapui-plugin
+[4]: https://github.com/hschott/soapui-pluginloader-jailbreak
