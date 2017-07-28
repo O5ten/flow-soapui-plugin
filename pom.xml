@@ -194,7 +194,7 @@
                                             <version>${project.version}</version>
                                             <type>${project.packaging}</type>
                                             <overWrite>true</overWrite>
-                                            <outputDirectory>.soapuios/plugins</outputDirectory>
+                                            <outputDirectory>/home/travis/.soapuios/plugins</outputDirectory>
                                         </artifactItem>
                                     </artifactItems>
                                 </configuration>
@@ -235,7 +235,7 @@
                                             <version>${project.version}</version>
                                             <type>${project.packaging}</type>
                                             <overWrite>true</overWrite>
-                                            <outputDirectory>.soapuios/plugins</outputDirectory>
+                                            <outputDirectory>/home/travis/.soapuios/plugins</outputDirectory>
                                         </artifactItem>
                                     </artifactItems>
                                 </configuration>
