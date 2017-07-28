@@ -3,4 +3,4 @@ dist: precise
 sudo: required
 jdk:
   - oraclejdk7
-script: mvn clean install -Psoapui-test
+script: mvn clean install -Psoapui-test -Dsoapui.plugin.directory=/home/travis/.soapuios/plugins
