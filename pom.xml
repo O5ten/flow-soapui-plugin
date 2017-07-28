@@ -229,6 +229,14 @@
                                             <overWrite>true</overWrite>
                                             <outputDirectory>${env.HOMEPATH}/.soapuios/plugins</outputDirectory>
                                         </artifactItem>
+                                        <artifactItem><!-- Travis Specific folder -->
+                                            <groupId>${project.groupId}</groupId>
+                                            <artifactId>${project.artifactId}</artifactId>
+                                            <version>${project.version}</version>
+                                            <type>${project.packaging}</type>
+                                            <overWrite>true</overWrite>
+                                            <outputDirectory>.soapuios/plugins</outputDirectory>
+                                        </artifactItem>
                                     </artifactItems>
                                 </configuration>
                             </execution>
@@ -274,12 +282,12 @@
                                                 <include>${project.artifactId}-*.jar</include>
                                             </includes>
                                         </fileset>
-                                        <fileset>
+                                        <filesets>
                                             <directory>.soapuios</directory>
                                             <includes>
                                                 <include>${project.artifactId}-*.jar</include>
                                             </includes>
-                                        </fileset>
+                                        </filesets>
                                     </filesets>
                                 </configuration>
                             </execution>
