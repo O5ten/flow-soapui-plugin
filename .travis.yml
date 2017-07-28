@@ -1,4 +1,6 @@
 language: java
+dist: precise
+sudo: required
 jdk:
-- openjdk7
+- oraclejdk7
 script: mvn clean install -Psoapui-test
