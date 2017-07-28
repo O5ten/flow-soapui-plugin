@@ -1,7 +1,4 @@
 language: java
-sudo: false
 jdk:
   - oraclejdk8
-
-before_script:
-  - wget https://gist.githubusercontent.com/O5ten/edbb43c9728bd7c07dfdd3ba5c4f36bc/raw/c26061ff6e0c3c9fd680982760e6925768acd36a/settings.xml -O $HOME/.m2/settings.xml
+script: mvn clean install -Psoapui-test
