@@ -2,5 +2,5 @@ language: java
 dist: precise
 sudo: required
 jdk:
-- oraclejdk7
+  - oraclejdk7
 script: mvn clean install -Psoapui-test

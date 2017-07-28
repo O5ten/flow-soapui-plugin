@@ -17,6 +17,12 @@ Install
 
 copy the ``` target/flow-soapui-plugin-1.0.0.jar ``` and put it in ``` ${USER_HOME}/.soapuios/plugins```
 
+or run with the deploy-profile to let maven move it to your home-folder for you
+
+```bash
+ mvn clean install -Pdeploy
+```
+
 Unsigned Plugin
 -------------------------------
 

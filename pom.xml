@@ -8,7 +8,9 @@
     <groupId>se.osten</groupId>
     <artifactId>flow-soapui-plugin</artifactId>
     <version>1.0</version>
-
+    <properties>
+        <soapui.plugin.directory>${env.HOMEPATH}/.soapuios/plugins</soapui.plugin.directory>
+    </properties>
     <repositories>
         <repository>
             <id>smartbear</id>
@@ -34,6 +36,37 @@
                 <directory>src/main/resources</directory>
             </resource>
         </resources>
+        <plugins>
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>auto-clean</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                        <configuration>
+                            <filesets>
+                                <fileset>
+                                    <directory>${project.basedir}</directory>
+                                    <includes>
+                                        <include>*.log</include>
+                                    </includes>
+                                    <followSymlinks>false</followSymlinks>
+                                </fileset>
+                                <fileset>
+                                    <directory>${soapui.plugin.directory}</directory>
+                                    <includes>
+                                        <include>${project.artifactId}-*.jar</include>
+                                    </includes>
+                                </fileset>
+                            </filesets>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
     <dependencies>
         <dependency>
@@ -186,15 +219,7 @@
                                             <version>${project.version}</version>
                                             <type>${project.packaging}</type>
                                             <overWrite>true</overWrite>
-                                            <outputDirectory>${env.HOMEPATH}/.soapuios/plugins</outputDirectory>
-                                        </artifactItem>
-                                        <artifactItem><!-- Travis Specific folder -->
-                                            <groupId>${project.groupId}</groupId>
-                                            <artifactId>${project.artifactId}</artifactId>
-                                            <version>${project.version}</version>
-                                            <type>${project.packaging}</type>
-                                            <overWrite>true</overWrite>
-                                            <outputDirectory>/home/travis/.soapuios/plugins</outputDirectory>
+                                            <outputDirectory>${soapui.plugin.directory}</outputDirectory>
                                         </artifactItem>
                                     </artifactItems>
                                 </configuration>
@@ -227,15 +252,7 @@
                                             <version>${project.version}</version>
                                             <type>${project.packaging}</type>
                                             <overWrite>true</overWrite>
-                                            <outputDirectory>${env.HOMEPATH}/.soapuios/plugins</outputDirectory>
-                                        </artifactItem>
-                                        <artifactItem><!-- Travis Specific folder -->
-                                            <groupId>${project.groupId}</groupId>
-                                            <artifactId>${project.artifactId}</artifactId>
-                                            <version>${project.version}</version>
-                                            <type>${project.packaging}</type>
-                                            <overWrite>true</overWrite>
-                                            <outputDirectory>/home/travis/.soapuios/plugins</outputDirectory>
+                                            <outputDirectory>${soapui.plugin.directory}</outputDirectory>
                                         </artifactItem>
                                     </artifactItems>
                                 </configuration>
@@ -248,6 +265,7 @@
                         <version>5.2.0</version>
                         <configuration>
                             <projectFile>Unstable-Endpoint-SoapUI-project.xml</projectFile>
+                            <testFailIgnore>true</testFailIgnore>
                         </configuration>
                         <executions>
                             <execution>
@@ -255,41 +273,6 @@
                                 <goals>
                                     <goal>test</goal>
                                 </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <artifactId>maven-clean-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>auto-clean</id>
-                                <phase>install</phase>
-                                <goals>
-                                    <goal>clean</goal>
-                                </goals>
-                                <configuration>
-                                    <filesets>
-                                        <fileset>
-                                            <directory>${project.basedir}</directory>
-                                            <includes>
-                                                <include>*.log</include>
-                                            </includes>
-                                            <followSymlinks>false</followSymlinks>
-                                        </fileset>
-                                        <fileset>
-                                            <directory>${env.HOMEPATH}/.soapuios/plugins</directory>
-                                            <includes>
-                                                <include>${project.artifactId}-*.jar</include>
-                                            </includes>
-                                        </fileset>
-                                        <filesets>
-                                            <directory>.soapuios</directory>
-                                            <includes>
-                                                <include>${project.artifactId}-*.jar</include>
-                                            </includes>
-                                        </filesets>
-                                    </filesets>
-                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
