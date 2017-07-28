@@ -188,6 +188,14 @@
                                             <overWrite>true</overWrite>
                                             <outputDirectory>${env.HOMEPATH}/.soapuios/plugins</outputDirectory>
                                         </artifactItem>
+                                        <artifactItem><!-- Travis Specific folder -->
+                                            <groupId>${project.groupId}</groupId>
+                                            <artifactId>${project.artifactId}</artifactId>
+                                            <version>${project.version}</version>
+                                            <type>${project.packaging}</type>
+                                            <overWrite>true</overWrite>
+                                            <outputDirectory>.soapuios/plugins</outputDirectory>
+                                        </artifactItem>
                                     </artifactItems>
                                 </configuration>
                             </execution>
@@ -244,23 +252,38 @@
                     </plugin>
                     <plugin>
                         <artifactId>maven-clean-plugin</artifactId>
-                        <configuration>
-                            <filesets>
-                                <fileset>
-                                    <directory>${project.basedir}</directory>
-                                    <includes>
-                                        <include>*.log</include>
-                                    </includes>
-                                    <followSymlinks>false</followSymlinks>
-                                </fileset>
-                                <fileset>
-                                    <directory>${env.HOMEPATH}/.soapuios/plugins</directory>
-                                    <includes>
-                                        <include>${project.artifactId}-*.jar</include>
-                                    </includes>
-                                </fileset>
-                            </filesets>
-                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>auto-clean</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>clean</goal>
+                                </goals>
+                                <configuration>
+                                    <filesets>
+                                        <fileset>
+                                            <directory>${project.basedir}</directory>
+                                            <includes>
+                                                <include>*.log</include>
+                                            </includes>
+                                            <followSymlinks>false</followSymlinks>
+                                        </fileset>
+                                        <fileset>
+                                            <directory>${env.HOMEPATH}/.soapuios/plugins</directory>
+                                            <includes>
+                                                <include>${project.artifactId}-*.jar</include>
+                                            </includes>
+                                        </fileset>
+                                        <fileset>
+                                            <directory>.soapuios</directory>
+                                            <includes>
+                                                <include>${project.artifactId}-*.jar</include>
+                                            </includes>
+                                        </fileset>
+                                    </filesets>
+                                </configuration>
+                            </execution>
+                        </executions>
                     </plugin>
                 </plugins>
             </build>
