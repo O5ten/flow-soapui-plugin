@@ -45,6 +45,15 @@ Usage
 - Run unstable testcase
 
 The test will be rerun from that point until all teststeps are successful or maximum number of attempts are reached
+
+Examples
+-------------------------------
+
+Since it's difficult to use anything without having an example to consult there is a sample project included that shows the intended use-cases. 
+
+![Picture of the teststep][1]
+
+You can find it[here][2]
  
 Future Work/Feature Requests
 -------------------------------
@@ -53,3 +62,5 @@ Future Work/Feature Requests
 - Mock-Service-control test-steps, today you have to script to do that. 
 - SSH Test-Steps 
 
+[1]: https://github.com/O5ten/flow-soapui-plugin/blob/master/repeat-test-step.jpg
+[2]: https://github.com/O5ten/flow-soapui-plugin/blob/master/Unstable-Endpoint-SoapUI-project.xml
