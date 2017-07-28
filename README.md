@@ -53,7 +53,7 @@ Since it's difficult to use anything without having an example to consult there 
 
 ![Picture of the teststep][1]
 
-You can find it[here][2]
+You can find it[here][2]. To make sure it works [Travis CI][3] runs the entire sample-project as a regression-test against the teststep. 
  
 Future Work/Feature Requests
 -------------------------------
@@ -64,3 +64,4 @@ Future Work/Feature Requests
 
 [1]: https://github.com/O5ten/flow-soapui-plugin/blob/master/repeat-test-step.jpg
 [2]: https://github.com/O5ten/flow-soapui-plugin/blob/master/Unstable-Endpoint-SoapUI-project.xml
+[3]: https://travis-ci.org/O5ten/flow-soapui-plugin
