@@ -7,7 +7,7 @@
     <name>SoapUI Flow Plugin</name>
     <groupId>se.osten</groupId>
     <artifactId>flow-soapui-plugin</artifactId>
-    <version>1.0</version>
+    <version>1.0.1-SNAPSHOT</version>
     <properties>
         <soapui.plugin.directory>${env.HOMEPATH}/.soapuios/plugins</soapui.plugin.directory>
     </properties>

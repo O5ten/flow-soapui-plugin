@@ -11,10 +11,12 @@ import com.eviware.soapui.model.testsuite.TestStep;
 import com.eviware.soapui.model.testsuite.TestStepResult;
 import com.eviware.soapui.monitor.support.TestMonitorListenerAdapter;
 import com.eviware.soapui.plugins.auto.PluginTestStep;
+import com.eviware.soapui.support.UISupport;
 import com.eviware.soapui.support.xml.XmlObjectConfigurationBuilder;
 import com.eviware.soapui.support.xml.XmlObjectConfigurationReader;
 import com.google.common.collect.Lists;
 
+import javax.swing.*;
 import java.util.List;
 
 @PluginTestStep(typeName = "RepeatTestStep", name = "Repeat Test Step",
@@ -63,8 +65,9 @@ public class RepeatTestStep extends WsdlTestStepWithProperties {
         getConfig().setConfig(builder.finish());
     }
 
-    private boolean settingExists(String settingId, String key) {
-        return settingId.equalsIgnoreCase(key);
+    @Override
+    public ImageIcon getIcon() {
+        return UISupport.createImageIcon("repeat.jpg");
     }
 
     public TestStepResult run(TestCaseRunner testCaseRunner, TestCaseRunContext testCaseRunContext) {
