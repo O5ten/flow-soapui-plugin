@@ -5,18 +5,17 @@ import com.eviware.soapui.config.TestStepConfig;
 import com.eviware.soapui.impl.wsdl.testcase.WsdlTestCase;
 import com.eviware.soapui.impl.wsdl.teststeps.WsdlTestStepResult;
 import com.eviware.soapui.impl.wsdl.teststeps.WsdlTestStepWithProperties;
-import com.eviware.soapui.model.testsuite.TestCaseRunContext;
-import com.eviware.soapui.model.testsuite.TestCaseRunner;
-import com.eviware.soapui.model.testsuite.TestStep;
-import com.eviware.soapui.model.testsuite.TestStepResult;
+import com.eviware.soapui.model.testsuite.*;
 import com.eviware.soapui.monitor.support.TestMonitorListenerAdapter;
 import com.eviware.soapui.plugins.auto.PluginTestStep;
 import com.eviware.soapui.support.UISupport;
 import com.eviware.soapui.support.xml.XmlObjectConfigurationBuilder;
 import com.eviware.soapui.support.xml.XmlObjectConfigurationReader;
-import com.google.common.collect.Lists;
 
 import javax.swing.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.List;
 
 @PluginTestStep(typeName = "RepeatTestStep", name = "Repeat Test Step",
@@ -28,6 +27,7 @@ public class RepeatTestStep extends WsdlTestStepWithProperties {
     private String targetTestStep;
     private static boolean actionGroupAdded = false;
     private int currentAttempts;
+    private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
     public RepeatTestStep(WsdlTestCase testCase, TestStepConfig config, boolean forLoadTest) {
         super(testCase, config, true, true);
@@ -40,6 +40,13 @@ public class RepeatTestStep extends WsdlTestStepWithProperties {
                 boolean isParentTestCase = testCaseRunner.getTestCase().getId().equalsIgnoreCase(getModelItem().getParent().getId());
                 if (isParentTestCase) {
                     currentAttempts = 0;
+                }
+            }
+        });
+        propertyChangeSupport.addPropertyChangeListener(new PropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent evt) {
+                if(evt.getPropertyName().equals(TestStep.NAME_PROPERTY) && evt.getOldValue().equals(RepeatTestStep.this.targetTestStep)){
+                    RepeatTestStep.this.targetTestStep = evt.getNewValue().toString();
                 }
             }
         });
@@ -71,13 +78,13 @@ public class RepeatTestStep extends WsdlTestStepWithProperties {
     }
 
     public TestStepResult run(TestCaseRunner testCaseRunner, TestCaseRunContext testCaseRunContext) {
-        WsdlTestStepResult result = new WsdlTestStepResult(this);
+        RepeatTestStepResult result = new RepeatTestStepResult(this);
         if(this.targetTestStep.equals("")){
             result.setStatus(TestStepResult.TestStepStatus.FAILED);
             result.setError(new Exception("Unable to run repeat teststep without a target teststep"));
             return result;
         }
-        if (isPredecessorsSuccessful(testCaseRunner)) {
+        if (isIterationSuccessful(testCaseRunner)) {
             handleSuccessfulIteration(testCaseRunner, testCaseRunContext, result);
         } else if (currentAttempts < maxAttempts) {
             triggerNextIteration(testCaseRunner, result);
@@ -94,50 +101,41 @@ public class RepeatTestStep extends WsdlTestStepWithProperties {
         result.setStatus(TestStepResult.TestStepStatus.OK);
     }
 
-    private void handleSuccessfulIteration(TestCaseRunner testCaseRunner, TestCaseRunContext testCaseRunContext, WsdlTestStepResult result) {
+    private void handleSuccessfulIteration(TestCaseRunner runner, TestCaseRunContext testCaseRunContext, WsdlTestStepResult result) {
         result.setStatus(TestStepResult.TestStepStatus.OK);
-        boolean allTestsPassed = true;
-        for (TestStepResult testStepResult : testCaseRunner.getResults()) {
-            if (testStepResult.getStatus() != TestStepResult.TestStepStatus.OK) {
-                allTestsPassed = false;
-                break;
-            }
-        }
-        if (allTestsPassed) {
+        if (isIterationSuccessful(runner) && isPreviousRepeatStepsSuccessful(runner)) {
             testCaseRunContext.setProperty(TestCaseRunner.Status.class.getName(), TestCaseRunner.Status.RUNNING);
+        } else {
+            testCaseRunContext.setProperty(TestCaseRunner.Status.class.getName(), TestCaseRunner.Status.FAILED);
         }
         currentAttempts = 0;
     }
 
-    private boolean isPredecessorsSuccessful(TestCaseRunner runner) {
-        WsdlTestCase testCase = getTestCase();
-        int targetIndex = testCase.getTestStepIndexByName(this.getTargetTestStep());
-        int thisIndex = testCase.getTestStepIndexByName(this.getName());
-        List<TestStep> includedTestSteps = Lists.newArrayList();
-        int plusOneIfNotFirstIteration = currentAttempts == 0 ? 0 : 1;
-
-        for (int i = targetIndex; i < thisIndex+plusOneIfNotFirstIteration; i++) {
-            TestStepResult testResult = runner.getResults().get(i);
-            includedTestSteps.add(testResult.getTestStep());
-            boolean isFailedTestStep = testResult.getStatus() != WsdlTestStepResult.TestStepStatus.OK;
-
-            if (isFailedTestStep) {
-                removeIterationResults(runner, includedTestSteps);
+    private boolean isPreviousRepeatStepsSuccessful(TestCaseRunner runner) {
+        List<TestStepResult> results = runner.getResults();
+        for(TestStepResult result : results ){
+            if(result instanceof RepeatTestStepResult && result.getStatus() == RepeatTestStepResult.TestStepStatus.FAILED){
                 return false;
             }
         }
         return true;
     }
 
-    private void removeIterationResults(TestCaseRunner runner, List<TestStep> includedTestSteps) {
-        for (TestStep includedTestStep : includedTestSteps) {
-            for (TestStepResult historicResult : runner.getResults()) {
-                if (historicResult.getTestStep().getName().equals(includedTestStep.getName())) {
-                    runner.getResults().remove(historicResult);
-                    break;
-                }
+    private boolean isIterationSuccessful(TestCaseRunner runner) {
+        List<TestStepResult> results = runner.getResults();
+        WsdlTestCase testCase = getTestCase();
+        int fromIndex = testCase.getTestStepIndexByName(this.getTargetTestStep());
+        int toIndex = testCase.getTestStepIndexByName(this.getName());
+        int distance = toIndex-fromIndex;
+        int topIndex = results.size()-1;
+        for (int i = topIndex; i > topIndex-distance; i--) {
+            TestStepResult testResult = results.get(i);
+            boolean isFailedTestStep = testResult.getStatus() != WsdlTestStepResult.TestStepStatus.OK;
+            if(isFailedTestStep){
+                return false;
             }
         }
+        return true;
     }
 
     public int getMaxAttempts() {
