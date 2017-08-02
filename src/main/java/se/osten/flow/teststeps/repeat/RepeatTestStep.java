@@ -21,7 +21,7 @@ import java.util.List;
 
 @PluginTestStep(typeName = "RepeatTestStep", name = "Repeat Test Step",
         description = "Repeats the test from selected teststep",
-        iconPath = "repeat.jpg")
+        iconPath = "se/osten/flow/teststeps/repeat/repeat.png")
 public class RepeatTestStep extends WsdlTestStepWithProperties {
 
     private int maxAttempts;
@@ -67,7 +67,7 @@ public class RepeatTestStep extends WsdlTestStepWithProperties {
 
     @Override
     public ImageIcon getIcon() {
-        return UISupport.createImageIcon("repeat.jpg");
+        return UISupport.createImageIcon("se/osten/flow/teststeps/repeat/repeat.png");
     }
 
     public TestStepResult run(TestCaseRunner testCaseRunner, TestCaseRunContext testCaseRunContext) {

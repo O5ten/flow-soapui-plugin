@@ -61,6 +61,10 @@ Future Work/Feature Requests
 - SSH Test-Steps 
 - Please put your suggestion as an issue 
 
+Credits
+-------------------------------
+Icons made by [Madebyoliver](https://www.flaticon.com/authors/madebyoliver) and is licensed by  [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/)
+
 [1]: https://github.com/O5ten/flow-soapui-plugin/blob/master/repeat-test-step.jpg
 [2]: https://github.com/O5ten/flow-soapui-plugin/blob/master/Unstable-Endpoint-SoapUI-project.xml
 [3]: https://travis-ci.org/O5ten/flow-soapui-plugin
